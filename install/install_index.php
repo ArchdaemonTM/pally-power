@@ -1,8 +1,9 @@
 <?php
 /**
  * ═══════════════════════════════════════════════════════════════
- * PALADIN PROFILE v3 — Web Installer
- * LUMINOUS Engine · pally-profile.goldhatconsulting.com
+ * PALADIN PROFILE v5 — Web Installer
+ * LUMINOUS Engine · Repo-Wide Unique File: install/install_index.php
+ * Route: /install/ → served by root .htaccess rewrite
  * 
  * USAGE:
  *   1. Upload all files to your IONOS subdomain root
@@ -89,7 +90,9 @@ function runChecks(): array {
     
     // Check key application files
     $requiredFiles = [
-        '../index.html', '../api/index.php', '../includes/db.php',
+        '../index.html', '../api/api_index.php', '../includes/db.php',
+        '../p/p_index.php', '../orders/orders_index.php',
+        '../patches/patches_index.php',
         '../public/css/paladin.css', '../public/css/heartsong.css',
         '../public/js/heartsong.js', '../.htaccess',
     ];
@@ -104,7 +107,7 @@ function runChecks(): array {
     $checks['app_files'] = [
         'label' => 'Application files',
         'ok' => $allFilesOk,
-        'note' => $allFilesOk ? 'All 7 required files present' : 'Missing: ' . implode(', ', $missingFiles),
+        'note' => $allFilesOk ? 'All 10 required files present' : 'Missing: ' . implode(', ', $missingFiles),
     ];
     
     // mod_rewrite (best-effort check)
@@ -332,7 +335,7 @@ $allChecksPass = !array_filter($checks, fn($c) => !$c['ok'] && $c['label'] !== '
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Install — Paladin Profile v3</title>
+<title>Install — Paladin Profile v5</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;700&family=EB+Garamond:wght@400;500&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
@@ -376,14 +379,14 @@ h2{font-family:'Cinzel',serif;font-size:1.2rem;color:var(--iron);margin:2rem 0 1
 <body>
 <div class="wrap">
 
-<h1>⚜ Paladin Profile v3</h1>
+<h1>⚜ Paladin Profile v5</h1>
 <div class="subtitle">LUMINOUS Engine Installer · Rose Ministries · GoldHat Consulting</div>
 
 <?php if ($alreadyInstalled && empty($success)): ?>
   <div class="installed-banner">
     <h3>Already Installed</h3>
     <p>config.php exists. The application appears to be installed.</p>
-    <p style="margin-top:.75rem"><a href="../" style="color:var(--gold-bright);font-weight:700">→ Go to Paladin Profile</a></p>
+    <p style="margin-top:.75rem"><a href="/" style="color:var(--gold-bright);font-weight:700">→ Go to Paladin Profile</a></p>
   </div>
   <div class="security-warning">
     <strong>Security Notice:</strong> Delete the <code>/install/</code> directory now. Leaving the installer accessible is a security risk.
@@ -402,7 +405,7 @@ h2{font-family:'Cinzel',serif;font-size:1.2rem;color:var(--iron);margin:2rem 0 1
   <div class="installed-banner">
     <h3>Installation Complete!</h3>
     <p>Your Paladin Profile is ready.</p>
-    <p style="margin-top:.75rem"><a href="../" style="color:var(--gold-bright);font-weight:700;font-size:1.1rem">→ Launch Paladin Profile</a></p>
+    <p style="margin-top:.75rem"><a href="/" style="color:var(--gold-bright);font-weight:700;font-size:1.1rem">→ Launch Paladin Profile</a></p>
   </div>
   <div class="security-warning">
     <strong>IMPORTANT:</strong> Delete the entire <code>/install/</code> directory immediately. This installer contains database credentials in form history and should not remain accessible.
@@ -462,7 +465,7 @@ h2{font-family:'Cinzel',serif;font-size:1.2rem;color:var(--iron);margin:2rem 0 1
 <?php endif; ?>
 
 <div class="footer">
-  <p>Paladin Profile v3.0.0 · LUMINOUS Engine · © 2026 David William Sylvester</p>
+  <p>Paladin Profile v5.0.0 · LUMINOUS Engine · © 2026 David William Sylvester</p>
   <p>GoldHat™ 98925168 · ArchDaemon™ 98940257 · Rose Ministries Ordained</p>
 </div>
 

@@ -1,0 +1,17 @@
+# ═══════════════════════════════════════════════════════════════
+# PALADIN PROFILE v5 — /orders/.htaccess
+# Key file: orders_index.php
+# Root .htaccess routes /orders/* here.
+# Also handles legacy /orders.html redirect (done at root level).
+# ═══════════════════════════════════════════════════════════════
+
+Options -Indexes
+
+RewriteEngine On
+RewriteBase /orders/
+
+# Allow orders_index.php to serve
+RewriteRule ^orders_index\.php$ - [L]
+
+# Block everything else
+RewriteRule ^(?!orders_index\.php).*$ - [R=404,L]

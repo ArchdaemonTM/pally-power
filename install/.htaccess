@@ -1,0 +1,20 @@
+# ═══════════════════════════════════════════════════════════════
+# PALADIN PROFILE v5 — /install/.htaccess
+# Key file: install_index.php
+#
+# SECURITY: After installation is complete, DELETE this entire
+# /install/ directory. Leaving it live is a critical security risk.
+#
+# During install only: root .htaccess routes /install/* here.
+# ═══════════════════════════════════════════════════════════════
+
+Options -Indexes
+
+RewriteEngine On
+RewriteBase /install/
+
+# Allow install_index.php only
+RewriteRule ^install_index\.php$ - [L]
+
+# Block schema.sql and any other file from direct web access
+RewriteRule ^(?!install_index\.php).*$ - [R=404,L]

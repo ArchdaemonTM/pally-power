@@ -1,0 +1,19 @@
+# ═══════════════════════════════════════════════════════════════
+# PALADIN PROFILE v5 — /api/.htaccess
+# Key file: api_index.php
+# All requests to /api/* are routed here by root .htaccess.
+# This local file enforces no direct access to any other file.
+# ═══════════════════════════════════════════════════════════════
+
+Options -Indexes
+
+RewriteEngine On
+RewriteBase /api/
+
+# Allow api_index.php to execute directly (root .htaccess sends traffic here)
+RewriteRule ^api_index\.php$ - [L]
+
+# Block access to any other file in this directory
+RewriteRule ^(?!api_index\.php).*$ - [R=404,L]
+
+# CORS preflight handled by api_index.php — no special header rules needed here
