@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paladin Profile v3 — LUMINOUS Engine · Rose Ministries · GoldHat Consulting</title>
+<meta name="description" content="The Modern Paladin Character Planner v3. Discover your Heart Song. Level 1-50 dream machine. Define your dream. Track your growth. Level up for real.">
+<meta name="author" content="David William Sylvester · GoldHat Consulting LLC">
+<link rel="canonical" href="https://pally-profile.goldhatconsulting.com/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Source+Sans+3:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="public/css/paladin.css">
+<link rel="stylesheet" href="public/css/heartsong.css">
+<script src="public/js/heartsong.js" defer></script>
+</head>
+<body>
+<!-- Header -->
+<header class="site-header"><div class="header-inner">
+  <a class="logo-wrap" href="/"><div class="logo-text">Paladin Profile<span>LUMINOUS Engine v3 · Rose Ministries</span></div></a>
+  <nav class="main-nav" id="mainNav">
+    <a onclick="showView('quiz')" style="color:var(--gold-bright)">♪ Heart Song</a>
+    <a href="orders.html">Orders</a>
+    <a onclick="showView('wizard')">Builder</a>
+    <a onclick="showView('gallery')">Gallery</a>
+    <a onclick="showView('suggest')">Suggest</a>
+    <a onclick="showView('journal')">Journal</a>
+    <a onclick="showView('import')">Import/Export</a>
+  </nav>
+  <button class="mobile-toggle" id="mobileToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+</div></header>
+
+<!-- Hero -->
+<div class="hero" id="heroSection">
+  <div class="hero-title">Paladin Profile</div>
+  <div class="hero-subtitle">Define The Dream · We Help You Track It</div>
+  <div class="hero-blazon"><em>"A Paladin is anyone who takes an Oath to something greater than themselves. You choose when you level up. Each level corresponds to real growth in your real life. This is a dream machine."</em><br>— The Real Preacher Ministry · Rose Ministries Ordained</div>
+  <div class="hero-stats">
+    <div class="hero-stat"><span class="num" id="statOrders">10</span><span class="label">Orders</span></div>
+    <div class="hero-stat"><span class="num">50</span><span class="label">Levels</span></div>
+    <div class="hero-stat"><span class="num" id="statVariants">∞</span><span class="label">Builds</span></div>
+    <div class="hero-stat"><span class="num" id="statPublic">—</span><span class="label">Public Paladins</span></div>
+  </div>
+  <button class="btn-primary" onclick="showView('quiz')" style="font-size:1rem;padding:1rem 2.5rem">🎵 Discover Your Heart Song</button>
+  <div style="margin-top:1rem;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+    <button class="btn btn-back" onclick="showView('wizard')" style="color:var(--gold)">I know my Order — Go to Builder →</button>
+    <a href="orders.html" class="btn btn-back" style="color:var(--silver)">📖 Read the Orders Manual →</a>
+    <button class="btn btn-back" onclick="showView('gallery')" style="color:var(--silver)">Browse Public Paladins →</button>
+  </div>
+</div>
+
+<!-- Main App Container -->
+<div class="app-wrap" id="appWrap" style="display:none">
+
+  <!-- ═══ HEART SONG QUIZ VIEW ═══ -->
+  <div class="view" id="view-quiz" style="display:none">
+    <div id="quizContainer"></div>
+  </div>
+
+  <!-- ═══ WIZARD VIEW ═══ -->
+  <div class="view" id="view-wizard">
+    <div class="progress-bar"><div class="progress-steps" id="progSteps"></div><div class="prog-labels" id="progLabels"></div></div>
+
+    <!-- Step 0: Identity -->
+    <div class="step active" id="step0">
+      <span class="section-kicker">Step I — Identity</span>
+      <h2>Who <em>Are</em> You?</h2>
+      <p>Every Paladin begins with a name and a story. In the modern era, your Paladin identity is who you actually are. This is the LUMINOUS engine: your real life is the campaign.</p>
+      <div class="decl-box"><p>You are ordained the moment you choose to stand for something. This profile records your answer. Every field below accepts custom input — your path is yours to define.</p></div>
+      <div class="form-grid">
+        <div class="form-group"><label class="form-label">Paladin Name</label><input class="form-input" id="fName" placeholder="Your name or title"></div>
+        <div class="form-group"><label class="form-label">Title / Honorific</label><input class="form-input" id="fTitle" placeholder='e.g. "The Wandering Shield"'></div>
+        <div class="form-group"><label class="form-label">Oath Source</label>
+          <div class="custom-select-wrap">
+            <select class="form-select" id="fOathSource"><option value="">Select or type custom...</option></select>
+            <input class="form-input custom-input" id="fOathSourceCustom" placeholder="Or type your own oath source..." style="display:none">
+            <button class="custom-toggle" onclick="toggleCustom('fOathSource')">✎ Custom</button>
+          </div>
+        </div>
+        <div class="form-group"><label class="form-label">Oath Name</label><input class="form-input" id="fOathName" placeholder='e.g. "Oath of the Open Hand"'></div>
+        <div class="form-group full-width"><label class="form-label">Oath Statement (Your Vow)</label><input class="form-input" id="fOathStatement" placeholder='e.g. "I will protect the vulnerable from generational harm"'></div>
+      </div>
+      <div class="nav-buttons"><div></div><button class="btn btn-next" onclick="nextStep()">Choose Your Order →</button></div>
+    </div>
+
+    <!-- Step 1: Color Order -->
+    <div class="step" id="step1">
+      <span class="section-kicker">Step II — Color Order</span>
+      <h2>Choose Your <em>Order</em></h2>
+      <p>The Color Orders represent the full spectrum of Paladin philosophy. From pure spiritual to pure martial. Your Order determines available Callings and your meta-category.</p>
+      <div class="order-grid" id="orderGrid"><div class="loading">Loading orders...</div></div>
+      <div class="nav-buttons"><button class="btn btn-back" onclick="prevStep()">← Back</button><button class="btn btn-next" onclick="nextStep()" id="orderNext" disabled>Alignment →</button></div>
+    </div>
+
+    <!-- Step 2: Alignment -->
+    <div class="step" id="step2">
+      <span class="section-kicker">Step III — Alignment</span>
+      <h2>Your <em>Moral Compass</em></h2>
+      <p>Your alignment determines how you pursue your oath — not whether your oath is "good." Modern Paladins exist across the full moral spectrum.</p>
+      <div class="alignment-grid" id="alignGrid"><div class="loading">Loading...</div></div>
+      <div class="nav-buttons"><button class="btn btn-back" onclick="prevStep()">← Back</button><button class="btn btn-next" onclick="nextStep()" id="alignNext" disabled>Attributes →</button></div>
+    </div>
+
+    <!-- Step 3: Attributes -->
+    <div class="step" id="step3">
+      <span class="section-kicker">Step IV — Attributes</span>
+      <h2>Core <em>Attributes</em></h2>
+      <p>Distribute 32 points across your attributes (min 8, max 18 at creation). Like Elder Scrolls, these grow through justified real-life action. You can also add custom attributes specific to your path.</p>
+      <div class="points-remaining"><span id="pointsLeft">32</span></div>
+      <div class="points-label" style="text-align:center;margin-bottom:.5rem">Points Remaining</div>
+      <div class="attr-grid" id="attrGrid"></div>
+      <div style="text-align:center;margin-top:1rem"><button class="btn btn-back" onclick="addCustomAttribute()" style="border-color:var(--forest);color:var(--forest)">+ Add Custom Attribute</button></div>
+      <div class="nav-buttons"><button class="btn btn-back" onclick="prevStep()">← Back</button><button class="btn btn-next" onclick="nextStep()">Calling →</button></div>
+    </div>
+
+    <!-- Step 4: Calling -->
+    <div class="step" id="step4">
+      <span class="section-kicker">Step V — Calling</span>
+      <h2>Your Primary <em>Calling</em></h2>
+      <p>Your Calling is your primary role — the core identity that defines your approach. Select from your Order's callings or create a custom one.</p>
+      <div class="filter-bar" id="callingFilter"></div>
+      <div class="spec-grid" id="callingGrid"></div>
+      <div class="custom-calling-wrap" style="margin-top:1rem">
+        <div class="form-group"><label class="form-label">Or Define a Custom Calling</label>
+        <div style="display:flex;gap:.5rem"><input class="form-input" id="fCallingCustom" placeholder="Type your custom calling name..."><button class="btn btn-next" onclick="selectCustomCalling()" style="white-space:nowrap">Use Custom</button></div></div>
+      </div>
+      <div class="nav-buttons"><button class="btn btn-back" onclick="prevStep()">← Back</button><button class="btn btn-next" onclick="nextStep()" id="callingNext" disabled>Specialization →</button></div>
+    </div>
+
+    <!-- Step 5: Specialization -->
+    <div class="step" id="step5">
+      <span class="section-kicker">Step VI — Specialization</span>
+      <h2>Modern <em>Specialization</em></h2>
+      <p>Your real-world expertise. A Paladin who cannot function in the modern world is a cosplayer, not a champion. Select from existing specs or create your own.</p>
+      <div class="filter-bar" id="specFilter"></div>
+      <div class="spec-grid" id="specGrid"></div>
+      <div class="custom-calling-wrap" style="margin-top:1rem">
+        <div class="form-group"><label class="form-label">Or Define a Custom Specialization</label>
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap"><input class="form-input" id="fSpecCategory" placeholder="Category (e.g. ENGINEERING)" style="max-width:200px"><input class="form-input" id="fSpecCustom" placeholder="Specialization name..."><button class="btn btn-next" onclick="selectCustomSpec()" style="white-space:nowrap">Use Custom</button></div></div>
+      </div>
+      <div class="nav-buttons"><button class="btn btn-back" onclick="prevStep()">← Back</button><button class="btn btn-next" onclick="nextStep()" id="specNext" disabled>Talents →</button></div>
+    </div>
+
+    <!-- Step 6: Talents -->
+    <div class="step" id="step6">
+      <span class="section-kicker">Step VII — Talent Trees</span>
+      <h2>Invest Your <em>Talents</em></h2>
+      <p>5 talent points at Level 1. +2 per level thereafter. Allocate across four trees. Sequential unlock — each node requires all previous nodes.</p>
+      <div class="points-remaining"><span id="talentLeft">5</span></div>
+      <div class="points-label" style="text-align:center;margin-bottom:1rem">Talent Points (Level 1)</div>
+      <div id="talentTrees"></div>
+      <div class="nav-buttons"><button class="btn btn-back" onclick="prevStep()">← Back</button><button class="btn btn-next" onclick="nextStep()">Level Plan →</button></div>
+    </div>
+
+    <!-- Step 7: Level Plan + Feats -->
+    <div class="step" id="step7">
+      <span class="section-kicker">Step VIII — Level Plan</span>
+      <h2>Your <em>50-Level</em> Arc</h2>
+      <p>Every 5 levels you earn a Feat. Capstones at 10/20/30/40/50. Skills require justified real-life growth. You choose when to level up.</p>
+      <div class="feat-grid" id="featGrid"></div>
+      <h3>Progression Timeline</h3>
+      <div class="level-timeline" id="levelTimeline"></div>
+      <div class="nav-buttons"><button class="btn btn-back" onclick="prevStep()">← Back</button><button class="btn btn-next" onclick="nextStep()">Review & Save →</button></div>
+    </div>
+
+    <!-- Step 8: Save / Sheet -->
+    <div class="step" id="step8">
+      <span class="section-kicker">Step IX — Your Profile</span>
+      <h2>Save Your <em>Paladin</em></h2>
+      <p>Review your build. Save to the database for a permanent shareable link, or export as a JSON file. You control your data.</p>
+      <div class="form-grid" style="max-width:500px;margin-bottom:2rem">
+        <div class="form-group full-width">
+          <label class="form-label">Make Public?</label>
+          <label style="display:flex;align-items:center;gap:.5rem;font-family:var(--font-sans);font-size:.85rem;cursor:pointer">
+            <input type="checkbox" id="fPublic"> Yes — give me a shareable link so others can view my Paladin build
+          </label>
+        </div>
+      </div>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2rem">
+        <button class="btn btn-next" onclick="saveCharacter()">💾 Save to Database</button>
+        <button class="btn btn-back" onclick="exportJson()" style="border-color:var(--forest);color:var(--forest)">⬇ Export JSON</button>
+      </div>
+      <div id="saveResult" style="display:none"></div>
+      <div class="char-sheet" id="charSheet"></div>
+      <div class="nav-buttons"><button class="btn btn-back" onclick="prevStep()">← Edit Build</button><div></div></div>
+    </div>
+  </div>
+
+  <!-- ═══ GALLERY VIEW ═══ -->
+  <div class="view" id="view-gallery" style="display:none">
+    <span class="section-kicker">Public Registry</span>
+    <h2>The <em>Gallery</em> of Paladins</h2>
+    <p>Browse public Paladin builds created by the community. Every profile here represents someone who stood up and defined their dream.</p>
+    <div class="filter-bar" id="galleryFilter"></div>
+    <div class="gallery-grid" id="galleryGrid"><div class="loading">Loading gallery...</div></div>
+    <div id="galleryPagination" style="text-align:center;margin-top:2rem"></div>
+  </div>
+
+  <!-- ═══ SUGGEST VIEW ═══ -->
+  <div class="view" id="view-suggest" style="display:none">
+    <span class="section-kicker">Community Expansion</span>
+    <h2>Suggest an <em>Addition</em></h2>
+    <p>The Paladin Profile system is designed to grow. Suggest new attributes, callings, specializations, talents, or even entirely new Color Orders. Approved suggestions become part of the engine for everyone.</p>
+    <div class="decl-box"><p>This is how we build a culture together. Your suggestion will be reviewed and, if approved, added to the system for all Paladins to use.</p></div>
+    <div class="form-grid" style="max-width:600px">
+      <div class="form-group"><label class="form-label">Suggestion Type</label>
+        <select class="form-select" id="sgType"><option value="">Select type...</option><option value="attribute">Attribute</option><option value="calling">Calling</option><option value="specialization">Specialization</option><option value="talent">Talent Node</option><option value="order">Color Order</option><option value="feat">Feat</option><option value="other">Other</option></select>
+      </div>
+      <div class="form-group"><label class="form-label">Category (if applicable)</label><input class="form-input" id="sgCategory" placeholder="e.g. STEM, martial, arcane..."></div>
+      <div class="form-group full-width"><label class="form-label">Name</label><input class="form-input" id="sgName" placeholder="What should it be called?"></div>
+      <div class="form-group full-width"><label class="form-label">Description</label><textarea class="form-input" id="sgDesc" rows="4" placeholder="Describe what this does and why it should exist..."></textarea></div>
+      <div class="form-group"><label class="form-label">Your Name (optional)</label><input class="form-input" id="sgSubmitter" placeholder="How should we credit you?"></div>
+      <div class="form-group"><label class="form-label">Email (optional, never shared)</label><input class="form-input" id="sgEmail" placeholder="For follow-up only"></div>
+      <div class="form-group full-width"><button class="btn btn-next" onclick="submitSuggestion()">Submit Suggestion</button></div>
+    </div>
+    <div id="sgResult" style="margin-top:1rem"></div>
+  </div>
+
+  <!-- ═══ JOURNAL VIEW ═══ -->
+  <div class="view" id="view-journal" style="display:none">
+    <span class="section-kicker">The Dream Tracker</span>
+    <h2>Level-Up <em>Journal</em></h2>
+    <p>Players choose when they level up. Each level must be earned through real growth in your real life. Describe what you accomplished, who mentored you, and what evidence you can point to.</p>
+    <div class="decl-box"><p>To level up, you need your Character ID and Edit Token (given when you saved). Enter them below, then describe the growth that justifies your advancement.</p></div>
+    <div class="form-grid" style="max-width:600px">
+      <div class="form-group full-width"><label class="form-label">Character ID</label><input class="form-input" id="juCharId" placeholder="UUID from when you saved"></div>
+      <div class="form-group full-width"><label class="form-label">Edit Token</label><input class="form-input" id="juToken" placeholder="Your secret edit token"></div>
+      <div class="form-group full-width"><label class="form-label">Journal Entry — What growth justifies this level-up?</label><textarea class="form-input" id="juEntry" rows="5" placeholder="Describe the real-world growth, achievement, or transformation that earns this level..."></textarea></div>
+      <div class="form-group"><label class="form-label">Mentor Name (optional)</label><input class="form-input" id="juMentor" placeholder="Who guided you?"></div>
+      <div class="form-group"><label class="form-label">Mentor Type</label>
+        <select class="form-select" id="juMentorType"><option value="">Select...</option><option value="self">Self-directed</option><option value="peer">Peer</option><option value="teacher">Teacher / Professor</option><option value="spiritual">Spiritual Guide</option><option value="professional">Professional Mentor</option><option value="family">Family Member</option><option value="community">Community Leader</option></select>
+      </div>
+      <div class="form-group full-width"><label class="form-label">Evidence / Notes (optional)</label><input class="form-input" id="juEvidence" placeholder="Links, certificates, milestones, dates..."></div>
+      <div class="form-group full-width"><button class="btn btn-next" onclick="submitLevelUp()">⬆ Level Up</button></div>
+    </div>
+    <div id="juResult" style="margin-top:1rem"></div>
+  </div>
+
+  <!-- ═══ IMPORT/EXPORT VIEW ═══ -->
+  <div class="view" id="view-import" style="display:none">
+    <span class="section-kicker">Data Portability</span>
+    <h2>Import / <em>Export</em></h2>
+    <p>Your character data belongs to you. Export as JSON to keep a local copy. Import from JSON to restore or migrate your Paladin.</p>
+    <div class="form-grid" style="max-width:600px">
+      <div class="form-group full-width">
+        <label class="form-label">Export by Character ID</label>
+        <div style="display:flex;gap:.5rem"><input class="form-input" id="expId" placeholder="Character UUID"><button class="btn btn-next" onclick="downloadExport()">⬇ Export JSON</button></div>
+      </div>
+      <div class="form-group full-width" style="margin-top:2rem;padding-top:2rem;border-top:1px solid rgba(200,150,26,.15)">
+        <label class="form-label">Import from JSON File</label>
+        <input type="file" id="impFile" accept=".json" class="form-input" style="padding:.75rem">
+        <button class="btn btn-next" onclick="doImport()" style="margin-top:.5rem">⬆ Import Character</button>
+      </div>
+    </div>
+    <div id="impResult" style="margin-top:1rem"></div>
+  </div>
+
+</div><!-- end app-wrap -->
+
+<!-- Closing -->
+<div class="closing-section">
+  <h2>Per Silvam et Iter</h2>
+  <p><em>"Through the forest and the journey."</em></p>
+  <div style="width:80px;height:1px;background:rgba(200,150,26,.5);margin:2rem auto"></div>
+  <p>This is a dream machine. You define the dream. We help you track it. Every level-up is real. Every feat is earned. Your Paladin profile is your commitment to becoming who you were meant to be.</p>
+  <div class="motto-final">GOOD GUYS, ON ME.</div>
+</div>
+
+<!-- Footer -->
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-top">
+    <div class="footer-brand"><div class="footer-brand-name">Gold Hat <span>Consulting</span></div><p>LUMINOUS Game Engine v2 · Paladin Profile Generator. Rose Ministries ordained. GoldHat™ &amp; ArchDaemon™ property network.</p></div>
+    <div class="footer-links"><h4>Properties</h4><ul><li><a href="https://goldhatconsulting.com">GoldHat Home</a></li><li><a href="https://therealpreacher.com">The Real Preacher</a></li><li><a href="https://beginaministry.com/ministershop/">Rose Ministries</a></li></ul></div>
+    <div class="footer-links"><h4>Engine</h4><ul><li><a href="#" onclick="showView('wizard')">Character Builder</a></li><li><a href="#" onclick="showView('gallery')">Public Gallery</a></li><li><a href="#" onclick="showView('suggest')">Suggest Addition</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><p>&copy; 2026 David William Sylvester. All rights reserved.</p><div class="footer-legal">GoldHat™ 98925168 · ArchDaemon™ 98940257 · LUMINOUS Engine v2.0</div></div>
+</div></footer>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// PALADIN PROFILE v2 — CLIENT ENGINE
+// API-driven, custom inputs everywhere, dual storage
+// ═══════════════════════════════════════════════════════════════
+
+const API = './api/';
+const STEPS = ['Identity','Order','Alignment','Attributes','Calling','Specialization','Talents','Level Plan','Save'];
+let currentStep = 0;
+let GD = {}; // game data cache
+let char = {name:'',title:'',oathSource:'',oathName:'',oathStatement:'',orderId:null,alignmentId:null,callingId:null,callingCustom:'',specId:null,specCustom:'',specCategory:'',attributes:{},customAttributes:[],talents:{},isPublic:false};
+
+// ─── API HELPERS ───
+async function api(action, opts = {}) {
+  const params = new URLSearchParams({action, ...opts.params||{}});
+  const url = API + '?' + params;
+  const fetchOpts = {method: opts.method||'GET', headers: {'Content-Type':'application/json'}};
+  if (opts.editToken) fetchOpts.headers['X-Edit-Token'] = opts.editToken;
+  if (opts.body) fetchOpts.body = JSON.stringify(opts.body);
+  try {
+    const r = await fetch(url, fetchOpts);
+    return await r.json();
+  } catch(e) {
+    console.warn('API offline, using local mode', e);
+    return null;
+  }
+}
+
+// ─── VIEW MANAGEMENT ───
+function showView(name) {
+  document.getElementById('heroSection').style.display = name === 'home' ? '' : 'none';
+  document.getElementById('appWrap').style.display = name === 'home' ? 'none' : '';
+  document.querySelectorAll('.view').forEach(v => v.style.display = 'none');
+  const view = document.getElementById('view-' + name);
+  if (view) view.style.display = '';
+  document.querySelectorAll('.main-nav a').forEach(a => a.classList.remove('active'));
+  if (name === 'gallery') loadGallery();
+  if (name === 'quiz' && heartSongQuiz) heartSongQuiz.start();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// ─── WIZARD NAVIGATION ───
+function goStep(n) {
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  document.getElementById('step'+n).classList.add('active');
+  currentStep = n;
+  updateProgress();
+  if (n === 8) generateSheet();
+  document.getElementById('appWrap').scrollIntoView({behavior:'smooth'});
+}
+function nextStep() { if(currentStep<STEPS.length-1) goStep(currentStep+1); }
+function prevStep() { if(currentStep>0) goStep(currentStep-1); }
+
+function buildProgress() {
+  document.getElementById('progSteps').innerHTML = STEPS.map((_,i)=>`<div class="prog-step ${i===0?'current':''}" data-i="${i}"></div>`).join('');
+  document.getElementById('progLabels').innerHTML = STEPS.map((n,i)=>`<span class="prog-label ${i===0?'active':''}">${n}</span>`).join('');
+}
+function updateProgress() {
+  document.querySelectorAll('.prog-step').forEach((el,i)=>{el.className='prog-step'+(i<currentStep?' done':i===currentStep?' current':'')});
+  document.querySelectorAll('.prog-label').forEach((el,i)=>{el.className='prog-label'+(i===currentStep?' active':'')});
+}
+
+// ─── CUSTOM INPUT TOGGLE ───
+function toggleCustom(selectId) {
+  const sel = document.getElementById(selectId);
+  const cust = document.getElementById(selectId + 'Custom');
+  if (cust.style.display === 'none') { cust.style.display=''; sel.style.display='none'; cust.focus(); }
+  else { sel.style.display=''; cust.style.display='none'; }
+}
+
+// ─── LOAD GAME DATA ───
+async function loadGameData() {
+  const data = await api('gamedata');
+  if (data) { GD = data; } else { GD = buildFallbackData(); }
+  renderOrders();
+  renderAlignments();
+  renderAttributes();
+  renderSpecializations();
+  renderTalentTrees();
+  renderFeats();
+  renderLevelTimeline();
+  populateOathSources();
+}
+
+function buildFallbackData() {
+  // Hardcoded fallback if API is offline (local-only mode)
+  return {orders:[],alignments:[],attributes:[],callings:{},callingsFlat:[],specializations:{},specializationsFlat:[],talentTrees:[],talentNodes:{},talentNodesFlat:[],feats:[],specCategories:[]};
+}
+
+function populateOathSources() {
+  const sel = document.getElementById('fOathSource');
+  const sources = ['Deity / Divine Being','Philosophy / School of Thought','Cause / Mission','Ancestral Legacy','Nature / Cosmic Force','Community / People','Justice / Law','Knowledge / Truth','Art / Creation / Beauty','Strategy / Warfare Philosophy'];
+  sources.forEach(s => { const o = document.createElement('option'); o.value=s; o.textContent=s; sel.appendChild(o); });
+  const co = document.createElement('option'); co.value='__custom'; co.textContent='— Custom (type below) —'; sel.appendChild(co);
+  sel.addEventListener('change', () => { if(sel.value==='__custom') toggleCustom('fOathSource'); });
+}
+
+// ─── RENDER FUNCTIONS ───
+function renderOrders() {
+  const g = document.getElementById('orderGrid');
+  if (!GD.orders?.length) { g.innerHTML='<p>No orders loaded. Check API connection.</p>'; return; }
+  g.innerHTML = GD.orders.map(o => `
+    <div class="order-card" data-order="${o.id}" onclick="selectOrder('${o.id}')" style="--order-color:${o.color_hex}">
+      <div class="order-color-bar" style="background:${o.color_hex}"></div>
+      <div class="order-name" style="color:${o.color_hex};filter:brightness(.7) saturate(1.4)">${o.name}</div>
+      <div class="order-title">${o.title}</div>
+      <div class="order-desc">${o.description}</div>
+      <div class="order-spectrum">◈ ${o.spectrum}</div>
+    </div>`).join('');
+}
+
+function selectOrder(id) {
+  char.orderId = id;
+  document.querySelectorAll('.order-card').forEach(c=>c.classList.toggle('selected',c.dataset.order===id));
+  document.getElementById('orderNext').disabled = false;
+  renderCallings();
+}
+
+function renderAlignments() {
+  const g = document.getElementById('alignGrid');
+  if (!GD.alignments?.length) return;
+  g.innerHTML = GD.alignments.map(a => `
+    <div class="align-card" data-align="${a.id}" onclick="selectAlignment('${a.id}')">
+      <span class="align-label">${a.name}</span>
+      <span class="align-sub">${a.subtitle}</span>
+    </div>`).join('');
+}
+
+function selectAlignment(id) {
+  char.alignmentId = id;
+  document.querySelectorAll('.align-card').forEach(c=>c.classList.toggle('selected',c.dataset.align===id));
+  document.getElementById('alignNext').disabled = false;
+}
+
+// ─── ATTRIBUTES (expandable) ───
+function renderAttributes() {
+  if (!GD.attributes?.length) return;
+  GD.attributes.forEach(a => { if(!(a.id in char.attributes)) char.attributes[a.id] = 8; });
+  updateAttrUI();
+}
+
+function updateAttrUI() {
+  const g = document.getElementById('attrGrid');
+  const allAttrs = [...GD.attributes, ...char.customAttributes.map(ca=>({id:ca.id,name:ca.name,description:ca.desc,is_core:0}))];
+  const spent = Object.values(char.attributes).reduce((s,v)=>s+Math.max(0,v-8),0);
+  document.getElementById('pointsLeft').textContent = 32 - spent;
+  g.innerHTML = allAttrs.map(a => `
+    <div class="attr-card ${a.is_core?'':'custom-attr'}">
+      <div class="attr-name">${a.name} ${a.is_core?'':'<span style="color:var(--forest);font-size:.7rem">CUSTOM</span>'}</div>
+      <div class="attr-desc">${a.description}</div>
+      <div class="attr-controls">
+        <button class="attr-btn" onclick="adjAttr('${a.id}',-1)">−</button>
+        <span class="attr-val">${char.attributes[a.id]||8}</span>
+        <button class="attr-btn" onclick="adjAttr('${a.id}',1)">+</button>
+      </div>
+    </div>`).join('');
+}
+
+function adjAttr(id, delta) {
+  const spent = Object.values(char.attributes).reduce((s,v)=>s+Math.max(0,v-8),0);
+  const nv = (char.attributes[id]||8) + delta;
+  if(nv < 1 || nv > 18) return;
+  if(delta > 0 && spent >= 32) return;
+  char.attributes[id] = nv;
+  updateAttrUI();
+}
+
+function addCustomAttribute() {
+  const name = prompt('Custom Attribute Name:');
+  if(!name) return;
+  const desc = prompt('Brief description:') || '';
+  const id = 'custom_' + name.toLowerCase().replace(/[^a-z0-9]/g,'_');
+  char.customAttributes.push({id, name, desc});
+  char.attributes[id] = 8;
+  updateAttrUI();
+}
+
+// ─── CALLINGS ───
+function renderCallings() {
+  const g = document.getElementById('callingGrid');
+  const callings = GD.callings?.[char.orderId] || [];
+  g.innerHTML = callings.map(c => `
+    <div class="spec-card" data-cid="${c.id}" onclick="selectCalling(${c.id},'${c.name.replace(/'/g,"\\'")}')">
+      <span class="spec-cat">${(GD.orders.find(o=>o.id===char.orderId)||{}).title||''}</span>
+      <div class="spec-name">${c.name}</div>
+      <div class="spec-desc">${c.description||'A calling within this order.'}</div>
+    </div>`).join('');
+}
+
+function selectCalling(id, name) {
+  char.callingId = id; char.callingCustom = '';
+  document.querySelectorAll('#callingGrid .spec-card').forEach(c=>c.classList.toggle('selected',c.dataset.cid==id));
+  document.getElementById('callingNext').disabled = false;
+}
+
+function selectCustomCalling() {
+  const v = document.getElementById('fCallingCustom').value.trim();
+  if(!v) return;
+  char.callingId = null; char.callingCustom = v;
+  document.querySelectorAll('#callingGrid .spec-card').forEach(c=>c.classList.remove('selected'));
+  document.getElementById('callingNext').disabled = false;
+}
+
+// ─── SPECIALIZATIONS ───
+function renderSpecializations(cat='all') {
+  const g = document.getElementById('specGrid');
+  const f = document.getElementById('specFilter');
+  const cats = GD.specCategories || [];
+  f.innerHTML = `<button class="filter-btn active" onclick="filterSpecs('all',this)">All</button>` +
+    cats.map(c=>`<button class="filter-btn" onclick="filterSpecs('${c}',this)">${c}</button>`).join('');
+  const list = cat==='all' ? (GD.specializationsFlat||[]) : (GD.specializations?.[cat]||[]);
+  g.innerHTML = list.map(s => `
+    <div class="spec-card" data-sid="${s.id}" onclick="selectSpec(${s.id})">
+      <span class="spec-cat">${s.category}</span>
+      <div class="spec-name">${s.name}</div>
+      <div class="spec-desc">${s.description||''}</div>
+    </div>`).join('');
+}
+
+function filterSpecs(cat, btn) {
+  document.querySelectorAll('#specFilter .filter-btn').forEach(b=>b.classList.remove('active'));
+  btn?.classList.add('active');
+  renderSpecializations(cat);
+}
+
+function selectSpec(id) {
+  char.specId = id; char.specCustom = '';
+  document.querySelectorAll('#specGrid .spec-card').forEach(c=>c.classList.toggle('selected',c.dataset.sid==id));
+  document.getElementById('specNext').disabled = false;
+}
+
+function selectCustomSpec() {
+  const v = document.getElementById('fSpecCustom').value.trim();
+  if(!v) return;
+  char.specId = null; char.specCustom = v; char.specCategory = document.getElementById('fSpecCategory').value.trim() || 'CUSTOM';
+  document.querySelectorAll('#specGrid .spec-card').forEach(c=>c.classList.remove('selected'));
+  document.getElementById('specNext').disabled = false;
+}
+
+// ─── TALENTS ───
+function renderTalentTrees() {
+  const container = document.getElementById('talentTrees');
+  if (!GD.talentTrees?.length) return;
+  GD.talentTrees.forEach(t => { if(!(t.id in char.talents)) char.talents[t.id] = 0; });
+  container.innerHTML = GD.talentTrees.map(tree => {
+    const nodes = GD.talentNodes?.[tree.id] || [];
+    return `<div class="talent-category">
+      <div class="talent-cat-header" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'grid':'none'">
+        <h4>${tree.icon} ${tree.name}</h4><span class="pts" id="pts-${tree.id}">${char.talents[tree.id]||0}/15</span>
+      </div>
+      <div class="talent-cat-body">${nodes.map((n,i) => `
+        <div class="talent-node ${i<(char.talents[tree.id]||0)?'allocated':i>(char.talents[tree.id]||0)?'locked':''}" data-tree="${tree.id}" data-idx="${i}" onclick="allocTalent('${tree.id}',${i})">
+          <span class="talent-icon">${tree.icon}</span>
+          <span class="talent-name">${n.name}</span>
+          <span class="talent-rank">${i<(char.talents[tree.id]||0)?'✓':`Tier ${i}`}</span>
+        </div>`).join('')}</div></div>`;
+  }).join('');
+}
+
+function allocTalent(tree, idx) {
+  const total = Object.values(char.talents).reduce((s,v)=>s+v,0);
+  if(idx===char.talents[tree] && total < 5) { char.talents[tree]++; }
+  else if(idx===char.talents[tree]-1) { char.talents[tree]--; }
+  else return;
+  updateTalentUI();
+}
+
+function updateTalentUI() {
+  const total = Object.values(char.talents).reduce((s,v)=>s+v,0);
+  document.getElementById('talentLeft').textContent = 5 - total;
+  GD.talentTrees?.forEach(tree => {
+    const el = document.getElementById('pts-'+tree.id);
+    if(el) el.textContent = `${char.talents[tree.id]||0}/15`;
+    document.querySelectorAll(`.talent-node[data-tree="${tree.id}"]`).forEach((n,i) => {
+      const pts = char.talents[tree.id]||0;
+      n.className = 'talent-node' + (i<pts?' allocated':i>pts?' locked':'');
+      const rank = n.querySelector('.talent-rank');
+      if(rank) rank.textContent = i<pts?'✓':`Tier ${i}`;
+    });
+  });
+}
+
+// ─── FEATS & LEVEL TIMELINE ───
+function renderFeats() {
+  const g = document.getElementById('featGrid');
+  if (!GD.feats?.length) return;
+  g.innerHTML = GD.feats.map(f => `
+    <div class="feat-card"><span class="feat-level">Level ${f.level_req}</span>
+      <div class="feat-name">${f.name}</div><div class="feat-desc">${f.description}</div>
+    </div>`).join('');
+}
+
+function renderLevelTimeline() {
+  const t = document.getElementById('levelTimeline');
+  let html = '';
+  for(let i=1;i<=50;i++) {
+    const isFeat = i%5===0, isCap = [10,20,30,40,50].includes(i);
+    let gains = [i===1?'Character Created · 5 Talent Points':'+2 Talent Points'];
+    if(isFeat) { const f = GD.feats?.find(f=>f.level_req==i); if(f) gains.push(`FEAT: ${f.name}`); }
+    if(isCap) gains.push('★ Capstone');
+    if(i%3===0) gains.push('+1 Attribute Point');
+    html += `<div class="level-entry ${isCap?'milestone':''}"><span class="level-num">Lv.${i}</span><span class="level-gains">${gains.join(' · ')}</span></div>`;
+  }
+  t.innerHTML = html;
+}
+
+// ─── CHARACTER SHEET ───
+function generateSheet() {
+  collectFormData();
+  const s = document.getElementById('charSheet');
+  const order = GD.orders?.find(o=>o.id===char.orderId) || {name:'Unsworn',title:'—',spectrum:'—',color_hex:'#999'};
+  const align = GD.alignments?.find(a=>a.id===char.alignmentId) || {name:'Unaligned'};
+  const calling = char.callingCustom || GD.callingsFlat?.find(c=>c.id==char.callingId)?.name || '—';
+  const spec = char.specCustom || GD.specializationsFlat?.find(sp=>sp.id==char.specId)?.name || '—';
+  
+  s.innerHTML = `<div class="sheet-header">
+    <div class="sheet-order" style="color:${order.color_hex};border-color:${order.color_hex}">${order.name}</div>
+    <h2>${char.name||'Unnamed Paladin'}</h2>
+    <div style="font-family:var(--font-serif);color:var(--gold);font-size:.95rem">${char.title||''}</div>
+    <div style="font-family:var(--font-sans);font-size:.75rem;color:rgba(200,196,188,.5);margin-top:.5rem">${order.title} · ${align.name} · ${order.spectrum}</div>
+  </div>
+  <div class="sheet-grid"><div>
+    <div class="sheet-section"><h4>Oath</h4>
+      <div class="sheet-row"><span class="k">Source</span><span class="v">${char.oathSource||'—'}</span></div>
+      <div class="sheet-row"><span class="k">Name</span><span class="v">${char.oathName||'—'}</span></div>
+      <div class="sheet-row"><span class="k">Statement</span><span class="v" style="font-size:.78rem;text-align:right;max-width:60%">${char.oathStatement||'—'}</span></div>
+    </div>
+    <div class="sheet-section"><h4>Attributes</h4>
+      ${Object.entries(char.attributes).map(([k,v])=>{
+        const a = GD.attributes?.find(at=>at.id===k) || char.customAttributes.find(ca=>ca.id===k) || {name:k};
+        return `<div class="sheet-row"><span class="k">${a.name}</span><span class="v">${v}</span></div>`;
+      }).join('')}
+    </div>
+  </div><div>
+    <div class="sheet-section"><h4>Calling & Specialization</h4>
+      <div class="sheet-row"><span class="k">Calling</span><span class="v">${calling}</span></div>
+      <div class="sheet-row"><span class="k">Doctorate</span><span class="v">${spec}</span></div>
+    </div>
+    <div class="sheet-section"><h4>Talents (Level 1)</h4>
+      ${GD.talentTrees?.map(t=>`<div class="sheet-row"><span class="k">${t.icon} ${t.name}</span><span class="v">${char.talents[t.id]||0}</span></div>`).join('')||''}
+    </div>
+    <div class="sheet-section"><h4>Feat Arc</h4><div class="sheet-tags">
+      ${GD.feats?.map(f=>`<span class="sheet-tag">Lv.${f.level_req}: ${f.name}</span>`).join('')||''}
+    </div></div>
+  </div></div>
+  <div style="text-align:center;margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(200,150,26,.2)">
+    <div style="font-family:var(--font-display);font-size:.85rem;color:var(--gold);letter-spacing:.1em">LUMINOUS ENGINE v2.0 · PALADIN PROFILE</div>
+    <div style="font-family:var(--font-sans);font-size:.68rem;color:rgba(200,196,188,.35);margin-top:.3rem">pally-profile.goldhatconsulting.com</div>
+  </div>`;
+}
+
+function collectFormData() {
+  char.name = document.getElementById('fName')?.value || '';
+  char.title = document.getElementById('fTitle')?.value || '';
+  const srcSel = document.getElementById('fOathSource');
+  const srcCust = document.getElementById('fOathSourceCustom');
+  char.oathSource = (srcSel.style.display==='none') ? srcCust.value : srcSel.value;
+  char.oathName = document.getElementById('fOathName')?.value || '';
+  char.oathStatement = document.getElementById('fOathStatement')?.value || '';
+  char.isPublic = document.getElementById('fPublic')?.checked || false;
+}
+
+// ─── SAVE CHARACTER ───
+async function saveCharacter() {
+  collectFormData();
+  const payload = {
+    name: char.name, title: char.title, oath_source: char.oathSource,
+    oath_name: char.oathName, oath_statement: char.oathStatement,
+    order_id: char.orderId, alignment_id: char.alignmentId,
+    calling_id: char.callingId, calling_custom: char.callingCustom,
+    specialization_id: char.specId, specialization_custom: char.specCustom,
+    is_public: char.isPublic, attributes: char.attributes, talents: char.talents,
+    custom_attributes: char.customAttributes,
+  };
+  
+  const result = await api('character', {method:'POST', body:payload});
+  const div = document.getElementById('saveResult');
+  div.style.display = '';
+  
+  if (result?.success) {
+    div.innerHTML = `<div class="decl-box" style="border-color:var(--forest)">
+      <p style="font-style:normal"><strong>Paladin Saved!</strong><br>
+      <span style="font-family:var(--font-sans);font-size:.82rem">
+      Character ID: <code style="color:var(--gold)">${result.id}</code><br>
+      Edit Token: <code style="color:var(--crimson)">${result.edit_token}</code><br>
+      ${result.share_url ? `Public Link: <a href="${result.share_url}" style="color:var(--gold)">${result.share_url}</a><br>` : ''}
+      <strong style="color:var(--crimson)">SAVE YOUR EDIT TOKEN — you need it to level up and edit your character.</strong>
+      </span></p></div>`;
+  } else {
+    // Fallback: save to localStorage
+    const localId = 'local-' + Date.now();
+    try { localStorage.setItem('pally-' + localId, JSON.stringify(payload)); } catch(e){}
+    div.innerHTML = `<div class="decl-box" style="border-color:var(--order-orange)">
+      <p style="font-style:normal"><strong>Saved Locally</strong> (API unavailable)<br>
+      <span style="font-family:var(--font-sans);font-size:.82rem">Your build has been saved to browser storage. Use Export JSON below to get a portable copy.</span></p></div>`;
+  }
+}
+
+// ─── EXPORT/IMPORT ───
+function exportJson() {
+  collectFormData();
+  const exportData = {
+    _format: 'paladin-profile-v3', _version: '3.0.0', _exported: new Date().toISOString(), _engine: 'LUMINOUS',
+    character: {
+      name:char.name, title:char.title, oath_source:char.oathSource, oath_name:char.oathName,
+      oath_statement:char.oathStatement, order_id:char.orderId, alignment_id:char.alignmentId,
+      calling_id:char.callingId, calling_custom:char.callingCustom,
+      specialization_id:char.specId, specialization_custom:char.specCustom,
+      current_level:1, attribute_values:Object.entries(char.attributes).map(([k,v])=>({attribute_id:k,base_value:v,current_value:v})),
+      talent_values:Object.entries(char.talents).map(([k,v])=>({tree_id:k,points_allocated:v})),
+      custom_attributes:char.customAttributes, build_data:{attributes:char.attributes,talents:char.talents}
+    }
+  };
+  const blob = new Blob([JSON.stringify(exportData, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `paladin-${(char.name||'profile').toLowerCase().replace(/\s+/g,'-')}.json`;
+  a.click(); URL.revokeObjectURL(a.href);
+}
+
+async function downloadExport() {
+  const id = document.getElementById('expId').value.trim();
+  if(!id) return alert('Enter a Character ID');
+  window.open(`${API}?action=export&id=${encodeURIComponent(id)}`, '_blank');
+}
+
+async function doImport() {
+  const file = document.getElementById('impFile').files[0];
+  if (!file) return alert('Select a JSON file first');
+  const text = await file.text();
+  let data;
+  try { data = JSON.parse(text); } catch(e) { return alert('Invalid JSON file'); }
+  
+  // Try API import
+  const result = await api('import', {method:'POST', body:data});
+  const div = document.getElementById('impResult');
+  if (result?.success) {
+    div.innerHTML = `<div class="decl-box" style="border-color:var(--forest)"><p style="font-style:normal"><strong>Imported!</strong><br>
+      <span style="font-family:var(--font-sans);font-size:.82rem">New Character ID: <code>${result.id}</code><br>Edit Token: <code style="color:var(--crimson)">${result.edit_token}</code></span></p></div>`;
+  } else {
+    // Local import fallback
+    if (data.character) {
+      const c = data.character;
+      char.name = c.name||''; char.title = c.title||''; char.oathSource = c.oath_source||'';
+      char.oathName = c.oath_name||''; char.oathStatement = c.oath_statement||'';
+      char.orderId = c.order_id; char.alignmentId = c.alignment_id;
+      if(c.attribute_values) c.attribute_values.forEach(av => { char.attributes[av.attribute_id] = av.base_value; });
+      if(c.talent_values) c.talent_values.forEach(tv => { char.talents[tv.tree_id] = tv.points_allocated; });
+      // Populate form
+      document.getElementById('fName').value = char.name;
+      document.getElementById('fTitle').value = char.title;
+      div.innerHTML = `<div class="decl-box" style="border-color:var(--forest)"><p style="font-style:normal"><strong>Imported locally!</strong> Go to Builder to see your character.</p></div>`;
+    }
+  }
+}
+
+// ─── SUGGESTIONS ───
+async function submitSuggestion() {
+  const payload = {
+    suggestion_type: document.getElementById('sgType').value,
+    suggested_name: document.getElementById('sgName').value,
+    suggested_category: document.getElementById('sgCategory').value,
+    description: document.getElementById('sgDesc').value,
+    submitter_name: document.getElementById('sgSubmitter').value,
+    submitter_email: document.getElementById('sgEmail').value,
+  };
+  if(!payload.suggestion_type || !payload.suggested_name) return alert('Type and Name are required');
+  const result = await api('suggestion', {method:'POST', body:payload});
+  const div = document.getElementById('sgResult');
+  if(result?.success) {
+    div.innerHTML = `<div class="decl-box" style="border-color:var(--forest)"><p style="font-style:normal"><strong>Thank you!</strong> Your suggestion has been submitted for review.</p></div>`;
+    ['sgType','sgName','sgCategory','sgDesc','sgSubmitter','sgEmail'].forEach(id=>document.getElementById(id).value='');
+  } else {
+    div.innerHTML = `<div class="decl-box" style="border-color:var(--crimson)"><p style="font-style:normal">Submission failed. ${result?.message||'Check your connection and try again.'}</p></div>`;
+  }
+}
+
+// ─── LEVEL UP JOURNAL ───
+async function submitLevelUp() {
+  const id = document.getElementById('juCharId').value.trim();
+  const token = document.getElementById('juToken').value.trim();
+  if(!id||!token) return alert('Character ID and Edit Token are required');
+  const payload = {
+    journal_entry: document.getElementById('juEntry').value,
+    mentor_name: document.getElementById('juMentor').value,
+    mentor_type: document.getElementById('juMentorType').value,
+    evidence_notes: document.getElementById('juEvidence').value,
+  };
+  const result = await api('levelup', {method:'POST', params:{id}, body:payload, editToken:token});
+  const div = document.getElementById('juResult');
+  if(result?.success) {
+    div.innerHTML = `<div class="decl-box" style="border-color:var(--forest)"><p style="font-style:normal"><strong>${result.message}</strong>
+      ${result.feat_unlocked ? `<br>🏆 ${result.feat_unlocked.name}: ${result.feat_unlocked.description}` : ''}
+      ${result.capstone ? '<br>★ CAPSTONE MILESTONE REACHED!' : ''}
+      <br><span style="font-family:var(--font-sans);font-size:.82rem">+${result.talent_points_gained} talent points earned</span></p></div>`;
+  } else {
+    div.innerHTML = `<div class="decl-box" style="border-color:var(--crimson)"><p style="font-style:normal">${result?.message||'Level-up failed. Check your credentials.'}</p></div>`;
+  }
+}
+
+// ─── GALLERY ───
+async function loadGallery(page=1) {
+  const g = document.getElementById('galleryGrid');
+  g.innerHTML = '<div class="loading">Loading gallery...</div>';
+  const result = await api('gallery', {params:{page:page.toString(), limit:'20'}});
+  if(!result?.characters) { g.innerHTML='<p>Gallery unavailable. Try again later.</p>'; return; }
+  
+  // Build filter
+  const f = document.getElementById('galleryFilter');
+  f.innerHTML = `<button class="filter-btn active" onclick="loadGallery()">All Orders</button>` +
+    (GD.orders||[]).map(o=>`<button class="filter-btn" onclick="loadGalleryFiltered('${o.id}')" style="border-color:${o.color_hex}">${o.name.replace('Order of the ','')}</button>`).join('');
+  
+  if (!result.characters.length) { g.innerHTML='<p style="text-align:center;color:var(--gold)">No public Paladins yet. Be the first!</p>'; return; }
+  g.innerHTML = result.characters.map(c => `
+    <div class="gallery-card" onclick="window.open('/p/${c.share_slug}','_blank')">
+      <div class="gallery-order" style="background:${c.order_color||'#999'}">${c.order_name||'Unsworn'}</div>
+      <div class="gallery-name">${c.name}</div>
+      <div class="gallery-meta">Lv.${c.current_level} · ${c.alignment_name||'—'} · ${c.title||''}</div>
+      <div class="gallery-oath">${c.oath_name||''}</div>
+    </div>`).join('');
+  
+  // Pagination
+  const pg = document.getElementById('galleryPagination');
+  if (result.pages > 1) {
+    pg.innerHTML = Array.from({length:result.pages},(_,i)=>
+      `<button class="filter-btn ${i+1===result.page?'active':''}" onclick="loadGallery(${i+1})">${i+1}</button>`
+    ).join(' ');
+  } else { pg.innerHTML = ''; }
+}
+
+async function loadGalleryFiltered(order) {
+  const g = document.getElementById('galleryGrid');
+  const result = await api('gallery', {params:{order, limit:'50'}});
+  if(!result?.characters?.length) { g.innerHTML='<p>No public Paladins in this Order yet.</p>'; return; }
+  g.innerHTML = result.characters.map(c => `
+    <div class="gallery-card"><div class="gallery-order" style="background:${c.order_color||'#999'}">${c.order_name||'?'}</div>
+    <div class="gallery-name">${c.name}</div><div class="gallery-meta">Lv.${c.current_level} · ${c.alignment_name||'—'}</div></div>`).join('');
+}
+
+// ─── INIT ───
+let heartSongQuiz;
+
+async function init() {
+  buildProgress();
+  await loadGameData();
+
+  // Initialize Heart Song Quiz
+  heartSongQuiz = new HeartSongEngine('quizContainer', (orderId) => {
+    // Callback when quiz completes or is skipped
+    if (orderId) {
+      // Pre-select the recommended order
+      selectOrder(orderId);
+      // Jump to wizard at step 1 (order) so they can see it selected
+      showView('wizard');
+      goStep(1);
+    } else {
+      // Skipped — go to wizard from the start
+      showView('wizard');
+      goStep(0);
+    }
+  });
+
+  // Check for ?view= param (shared link)
+  const params = new URLSearchParams(window.location.search);
+  if(params.get('view')) {
+    showView('wizard');
+  }
+  // Mobile nav
+  const tog=document.getElementById('mobileToggle'),nav=document.getElementById('mainNav');
+  if(tog&&nav){tog.addEventListener('click',()=>nav.classList.toggle('open'));}
+}
+init();
+</script>
+</body>
+</html>
