@@ -1,8 +1,23 @@
 <?php
 /**
  * ═══════════════════════════════════════════════════════════════
- * PALADIN PROFILE v3 — DB BATCH 1: Content Expansion
- * LUMINOUS Engine · pally-profile.goldhatconsulting.com
+ * SECURITY GATE — DELETE THIS FILE AFTER RUNNING
+ * This file performs database write operations.
+ * It should not remain accessible on a production server.
+ * ═══════════════════════════════════════════════════════════════
+ */
+
+// Refuse execution if a lockfile exists (already ran)
+$lockFile = __DIR__ . '/.patch1.lock';
+if (file_exists($lockFile)) {
+    http_response_code(403);
+    die('<h2>Patch already applied.</h2><p>Delete patches/patches_index.php from the server.</p>');
+}
+
+/**
+ * ═══════════════════════════════════════════════════════════════
+ * PALADIN PROFILE v5 — DB PATCH 1: Content Expansion (patches/patches_index.php)
+ * LUMINOUS Engine · Repo-Wide Unique File: patches/patches_index.php
  * ═══════════════════════════════════════════════════════════════
  * 
  * WHAT THIS ADDS:
@@ -16,8 +31,8 @@
  * AFTER:  160 callings, 100 specs, 14 attrs, 6 trees/90 nodes, 15 feats
  *
  * USAGE:
- *   Web:  Upload to /patches/batch1.php, visit in browser
- *   CLI:  php patches/batch1.php
+ *   Web:  Visit https://your-domain.com/patches/ (DELETE after running)
+ *   CLI:  php patches/patches_index.php
  *
  * SAFE TO RUN MULTIPLE TIMES (uses INSERT IGNORE / IF NOT EXISTS)
  * ═══════════════════════════════════════════════════════════════
@@ -28,8 +43,8 @@ declare(strict_types=1);
 // ─── BOOTSTRAP ───
 $configPath = __DIR__ . '/../config.php';
 if (!file_exists($configPath)) {
-    // Try one level up (if placed in /patches/)
-    $configPath = dirname(__DIR__) . '/config.php';
+    // patches/ is always one level below root — no alternate path needed
+    // $configPath already set correctly above
 }
 if (!file_exists($configPath)) {
     die("ERROR: config.php not found. Run the installer first.\n");
@@ -395,6 +410,11 @@ logResult("Theoretical build combinations: " . number_format($combinatorics) . "
 
 
 // ═══════════════════════════════════════════════════════════════
+// CREATE LOCKFILE — prevents re-execution
+// ═══════════════════════════════════════════════════════════════
+file_put_contents($lockFile, date('c'));
+
+// ═══════════════════════════════════════════════════════════════
 // OUTPUT
 // ═══════════════════════════════════════════════════════════════
 
@@ -419,7 +439,7 @@ h1{font-family:'Cinzel',serif;color:#8b6410;margin-bottom:1.5rem;text-align:cent
 <?php foreach ($results as $r): ?>
 <div class="msg msg-<?= $r['level'] ?>"><?= htmlspecialchars($r['msg']) ?></div>
 <?php endforeach; ?>
-<a href="../" class="back">← Return to Paladin Profile</a>
+<a href="/" class="back">← Return to Paladin Profile</a>
 <div class="warn"><strong>Security:</strong> Delete this file (<code>patches/batch1.php</code>) after running. It contains database write operations.</div>
 </body></html>
 <?php

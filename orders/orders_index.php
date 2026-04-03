@@ -1,3 +1,11 @@
+<?php
+/**
+ * PALADIN PROFILE v5 — Orders Manual
+ * LUMINOUS Engine · Repo-Wide Unique File: orders/orders_index.php
+ * Route: /orders/ → served by root .htaccess rewrite
+ */
+declare(strict_types=1);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +16,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Source+Sans+3:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="public/css/paladin.css">
+<link rel="stylesheet" href="/public/css/paladin.css">
 <style>
 /* ── Orders Page Specific ── */
 .orders-hero {
@@ -381,15 +389,15 @@
 
 <!-- Header -->
 <header class="site-header"><div class="header-inner">
-  <a class="logo-wrap" href="/"><div class="logo-text">Paladin Profile<span>LUMINOUS Engine v3 · Rose Ministries</span></div></a>
+  <a class="logo-wrap" href="/"><div class="logo-text">Paladin Profile<span>LUMINOUS Engine v5 · Rose Ministries</span></div></a>
   <nav class="main-nav" id="mainNav">
-    <a href="index.html#quiz" style="color:var(--gold-bright)">♪ Heart Song</a>
-    <a href="orders.html" class="active">Orders</a>
-    <a href="index.html#wizard">Builder</a>
-    <a href="index.html#gallery">Gallery</a>
-    <a href="index.html#suggest">Suggest</a>
-    <a href="index.html#journal">Journal</a>
-    <a href="index.html#import">Import/Export</a>
+    <a href="/#quiz" style="color:var(--gold-bright)">♪ Heart Song</a>
+    <a href="/orders/" class="active">Orders</a>
+    <a href="/#wizard">Builder</a>
+    <a href="/#gallery">Gallery</a>
+    <a href="/#suggest">Suggest</a>
+    <a href="/#journal">Journal</a>
+    <a href="/#import">Import/Export</a>
   </nav>
   <button class="mobile-toggle" id="mobileToggle" aria-label="Menu"><span></span><span></span><span></span></button>
 </div></header>
@@ -988,8 +996,8 @@
     <h2>Ready to Declare Your Order?</h2>
     <p>"You don't find your Order. You recognize it — because you have already been living by its covenant, even before you had a name for it."</p>
     <div class="cta-buttons">
-      <a href="index.html" class="btn btn-next" style="text-decoration:none;padding:.75rem 2rem">🎵 Take the Heart Song Quiz</a>
-      <a href="index.html" onclick="setTimeout(()=>{showView&&showView('wizard')},100)" class="btn" style="color:var(--gold);text-decoration:none;padding:.75rem 2rem">I Know My Order — Go to Builder →</a>
+      <a href="/" class="btn btn-next" style="text-decoration:none;padding:.75rem 2rem">🎵 Take the Heart Song Quiz</a>
+      <a href="/" class="btn" style="color:var(--gold);text-decoration:none;padding:.75rem 2rem">I Know My Order — Go to Builder →</a>
     </div>
   </div>
 
@@ -1009,9 +1017,9 @@
   <div class="footer-top">
     <div class="footer-brand"><div class="footer-brand-name">Gold Hat <span>Consulting</span></div><p>LUMINOUS Game Engine v3 · Paladin Profile Generator. Rose Ministries ordained. GoldHat™ &amp; ArchDaemon™ property network.</p></div>
     <div class="footer-links"><h4>Properties</h4><ul><li><a href="https://goldhatconsulting.com">GoldHat Home</a></li><li><a href="https://therealpreacher.com">The Real Preacher</a></li><li><a href="https://beginaministry.com/ministershop/">Rose Ministries</a></li></ul></div>
-    <div class="footer-links"><h4>Engine</h4><ul><li><a href="index.html">Character Builder</a></li><li><a href="orders.html">Orders Manual</a></li><li><a href="index.html">Public Gallery</a></li></ul></div>
+    <div class="footer-links"><h4>Engine</h4><ul><li><a href="/">Character Builder</a></li><li><a href="/orders/">Orders Manual</a></li><li><a href="/">Public Gallery</a></li></ul></div>
   </div>
-  <div class="footer-bottom"><p>&copy; 2026 David William Sylvester. All rights reserved.</p><div class="footer-legal">GoldHat™ 98925168 · ArchDaemon™ 98940257 · LUMINOUS Engine v3.0</div></div>
+  <div class="footer-bottom"><p>&copy; 2026 David William Sylvester. All rights reserved.</p><div class="footer-legal">GoldHat™ 98925168 · ArchDaemon™ 98940257 · LUMINOUS Engine v5.0</div></div>
 </div></footer>
 
 <script>

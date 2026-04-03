@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Paladin Profile v3 — LUMINOUS Engine · Rose Ministries · GoldHat Consulting</title>
+<title>Paladin Profile v5 — LUMINOUS Engine · Rose Ministries · GoldHat Consulting</title>
 <meta name="description" content="The Modern Paladin Character Planner v3. Discover your Heart Song. Level 1-50 dream machine. Define your dream. Track your growth. Level up for real.">
 <meta name="author" content="David William Sylvester · GoldHat Consulting LLC">
 <link rel="canonical" href="https://pally-profile.goldhatconsulting.com/">
@@ -20,7 +20,7 @@
   <a class="logo-wrap" href="/"><div class="logo-text">Paladin Profile<span>LUMINOUS Engine v3 · Rose Ministries</span></div></a>
   <nav class="main-nav" id="mainNav">
     <a onclick="showView('quiz')" style="color:var(--gold-bright)">♪ Heart Song</a>
-    <a href="orders.html">Orders</a>
+    <a href="/orders/">Orders</a>
     <a onclick="showView('wizard')">Builder</a>
     <a onclick="showView('gallery')">Gallery</a>
     <a onclick="showView('suggest')">Suggest</a>
@@ -44,7 +44,7 @@
   <button class="btn-primary" onclick="showView('quiz')" style="font-size:1rem;padding:1rem 2.5rem">🎵 Discover Your Heart Song</button>
   <div style="margin-top:1rem;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
     <button class="btn btn-back" onclick="showView('wizard')" style="color:var(--gold)">I know my Order — Go to Builder →</button>
-    <a href="orders.html" class="btn btn-back" style="color:var(--silver)">📖 Read the Orders Manual →</a>
+    <a href="/orders/" class="btn btn-back" style="color:var(--silver)">📖 Read the Orders Manual →</a>
     <button class="btn btn-back" onclick="showView('gallery')" style="color:var(--silver)">Browse Public Paladins →</button>
   </div>
 </div>
@@ -269,20 +269,20 @@
 <!-- Footer -->
 <footer class="site-footer"><div class="footer-inner">
   <div class="footer-top">
-    <div class="footer-brand"><div class="footer-brand-name">Gold Hat <span>Consulting</span></div><p>LUMINOUS Game Engine v2 · Paladin Profile Generator. Rose Ministries ordained. GoldHat™ &amp; ArchDaemon™ property network.</p></div>
+    <div class="footer-brand"><div class="footer-brand-name">Gold Hat <span>Consulting</span></div><p>LUMINOUS Game Engine v5 · Paladin Profile Generator. Rose Ministries ordained. GoldHat™ &amp; ArchDaemon™ property network.</p></div>
     <div class="footer-links"><h4>Properties</h4><ul><li><a href="https://goldhatconsulting.com">GoldHat Home</a></li><li><a href="https://therealpreacher.com">The Real Preacher</a></li><li><a href="https://beginaministry.com/ministershop/">Rose Ministries</a></li></ul></div>
     <div class="footer-links"><h4>Engine</h4><ul><li><a href="#" onclick="showView('wizard')">Character Builder</a></li><li><a href="#" onclick="showView('gallery')">Public Gallery</a></li><li><a href="#" onclick="showView('suggest')">Suggest Addition</a></li></ul></div>
   </div>
-  <div class="footer-bottom"><p>&copy; 2026 David William Sylvester. All rights reserved.</p><div class="footer-legal">GoldHat™ 98925168 · ArchDaemon™ 98940257 · LUMINOUS Engine v2.0</div></div>
+  <div class="footer-bottom"><p>&copy; 2026 David William Sylvester. All rights reserved.</p><div class="footer-legal">GoldHat™ 98925168 · ArchDaemon™ 98940257 · LUMINOUS Engine v5.0</div></div>
 </div></footer>
 
 <script>
 // ═══════════════════════════════════════════════════════════════
-// PALADIN PROFILE v2 — CLIENT ENGINE
+// PALADIN PROFILE v5 — CLIENT ENGINE
 // API-driven, custom inputs everywhere, dual storage
 // ═══════════════════════════════════════════════════════════════
 
-const API = './api/';
+const API = '/api/';
 const STEPS = ['Identity','Order','Alignment','Attributes','Calling','Specialization','Talents','Level Plan','Save'];
 let currentStep = 0;
 let GD = {}; // game data cache

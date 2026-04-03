@@ -1,0 +1,17 @@
+# ═══════════════════════════════════════════════════════════════
+# PALADIN PROFILE v5 — /p/.htaccess
+# Key file: p_index.php
+# Handles public character Armory view at /p/SLUG
+# Root .htaccess passes slug as ?slug= query param.
+# ═══════════════════════════════════════════════════════════════
+
+Options -Indexes
+
+RewriteEngine On
+RewriteBase /p/
+
+# Allow p_index.php to execute (receives ?slug= from root rewrite)
+RewriteRule ^p_index\.php$ - [L]
+
+# Block everything else
+RewriteRule ^(?!p_index\.php).*$ - [R=404,L]

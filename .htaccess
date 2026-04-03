@@ -1,18 +1,63 @@
+# ═══════════════════════════════════════════════════════════════
+# PALADIN PROFILE v5 — Root .htaccess
+# LUMINOUS Engine · Repo-Wide Unique File Convention
+#
+# Convention: every web-accessible directory has a <key>_index.php
+# LLM-compatibility: unique filenames prevent ambiguity across the repo
+# ═══════════════════════════════════════════════════════════════
+
 RewriteEngine On
 RewriteBase /
 
-# API routes
-RewriteRule ^api/(.*)$ api/index.php [QSA,L]
+# ─── Security: Block config.php access everywhere ───
+RewriteRule ^(.*)config\.php$ - [R=404,L]
 
-# Public character short URLs: /p/SLUG
-RewriteRule ^p/([a-z0-9]+)$ index.html?view=$1 [QSA,L]
+# ─── Security: Block includes/ directory (internal PHP only) ───
+RewriteRule ^includes(/.*)?$ - [R=404,L]
 
-# SPA fallback — serve index.html for all non-file routes
+# ─── API: /api/* → /api/api_index.php ───
+# Key: "api" — file: api/api_index.php
+RewriteCond %{REQUEST_URI} !^/api/api_index\.php$
+RewriteRule ^api(/.*)?$ /api/api_index.php [L,QSA]
+
+# ─── Character Armory: /p/SLUG → /p/p_index.php ───
+# Key: "p" — file: p/p_index.php
+RewriteCond %{REQUEST_URI} !^/p/p_index\.php$
+RewriteRule ^p/([a-z0-9]{4,16})/?$ /p/p_index.php?slug=$1 [L,QSA]
+# Bare /p/ with no slug → redirect home
+RewriteRule ^p/?$ / [R=302,L]
+
+# ─── Orders Manual: /orders/ → /orders/orders_index.php ───
+# Key: "orders" — file: orders/orders_index.php
+RewriteCond %{REQUEST_URI} !^/orders/orders_index\.php$
+RewriteRule ^orders(/.*)?$ /orders/orders_index.php [L,QSA]
+# Legacy: orders.html at root → /orders/
+RewriteRule ^orders\.html$ /orders/ [R=301,L]
+
+# ─── Installer: /install/ → /install/install_index.php ───
+# Key: "install" — file: install/install_index.php
+RewriteCond %{REQUEST_URI} !^/install/install_index\.php$
+RewriteRule ^install(/.*)?$ /install/install_index.php [L,QSA]
+
+# ─── Patches: /patches/ → /patches/patches_index.php ───
+# Key: "patches" — file: patches/patches_index.php
+RewriteCond %{REQUEST_URI} !^/patches/patches_index\.php$
+RewriteRule ^patches(/.*)?$ /patches/patches_index.php [L,QSA]
+
+# ─── Public assets: pass through directly (CSS/JS/images) ───
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^public/ - [L]
+
+# ─── Root SPA: everything else → index.html ───
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.html [QSA,L]
+RewriteRule ^$ index.html [L]
+# Catch remaining unknown routes back to SPA
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(?!api|p|orders|install|patches|public|includes)(.*)$ index.html [L,QSA]
 
-# Security headers
+# ─── Security Headers ───
 <IfModule mod_headers.c>
     Header set X-Content-Type-Options "nosniff"
     Header set X-Frame-Options "SAMEORIGIN"
@@ -20,14 +65,14 @@ RewriteRule ^(.*)$ index.html [QSA,L]
     Header set Referrer-Policy "strict-origin-when-cross-origin"
 </IfModule>
 
-# PHP settings for IONOS
+# ─── PHP settings (IONOS shared hosting) ───
 <IfModule mod_php.c>
     php_value upload_max_filesize 2M
     php_value post_max_size 2M
     php_value max_execution_time 30
 </IfModule>
 
-# Cache static assets
+# ─── Cache static assets ───
 <IfModule mod_expires.c>
     ExpiresActive On
     ExpiresByType text/css "access plus 1 week"

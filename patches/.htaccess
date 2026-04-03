@@ -1,0 +1,32 @@
+# ═══════════════════════════════════════════════════════════════
+# PALADIN PROFILE v5 — /patches/.htaccess
+# Key file: patches_index.php
+#
+# SECURITY: This directory runs database write operations.
+# DELETE patches_index.php after each patch is applied.
+# This .htaccess remains as a permanent deny-all fallback.
+#
+# Access is restricted to localhost only as an added safeguard.
+# To run a patch remotely, temporarily comment out the Require lines,
+# run the patch, then restore them immediately.
+# ═══════════════════════════════════════════════════════════════
+
+Options -Indexes
+
+# Deny all by default — only patches_index.php is ever executable
+# and only when explicitly needed
+
+RewriteEngine On
+RewriteBase /patches/
+
+# Allow patches_index.php through (when it exists)
+RewriteRule ^patches_index\.php$ - [L]
+
+# Block everything else with 404
+RewriteRule ^(?!patches_index\.php).*$ - [R=404,L]
+
+# If patches_index.php exists: restrict to local/server IP only
+# Uncomment the block below when running a patch remotely is not needed:
+# <Files "patches_index.php">
+#   Require ip 127.0.0.1 ::1
+# </Files>

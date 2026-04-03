@@ -1,8 +1,8 @@
 <?php
 /**
- * PALADIN PROFILE v3 — API Router
+ * PALADIN PROFILE v5 — API Router
  * LUMINOUS Engine · Production Build
- * Single entry point: /api/index.php
+ * Single entry point: /api/api_index.php (Repo-Wide Unique Name Convention)
  * 
  * Routes:
  *   GET  /api/?action=gamedata           → all orders, alignments, attributes, callings, specs, talents, feats
@@ -162,9 +162,10 @@ function getCharacter(): void {
     $char['journal']->execute([$char['id']]);
     $char['journal'] = $char['journal']->fetchAll();
     
-    // Decode build_json
+    // Decode build_json — null the raw string to prevent double-encoding in jsonResponse
     if ($char['build_json']) {
         $char['build_data'] = json_decode($char['build_json'], true);
+        $char['build_json'] = null;
     }
     
     jsonResponse(['character' => $char]);
